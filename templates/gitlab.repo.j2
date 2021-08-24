@@ -1,0 +1,10 @@
+{{ ansible_managed | comment }}
+[gitlab_gitlab-ee]
+name=gitlab_gitlab-ee
+baseurl={{ gitlab_repo_base_url }}
+repo_gpgcheck=0
+gpgcheck=0
+enabled=1
+sslverify=1
+sslcacert={{ gitlab_cacert_bundle }}
+metadata_expire=300

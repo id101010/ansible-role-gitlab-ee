@@ -1,0 +1,13 @@
+---
+# vim: ts=2 sw=2 et ft=yaml.ansible
+
+- name: reconfigure gitlab
+  shell: "gitlab-ctl reconfigure > /dev/null 2>&1"
+  notify: restart gitlab
+  register: gitlab_restart
+  failed_when: "gitlab_restart.rc > 2"
+
+- name: restart gitlab
+  service:
+    name: gitlab-runsvdir.service
+    state: restarted

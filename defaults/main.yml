@@ -1,0 +1,104 @@
+---
+# vim: ts=2 sw=2 et ft=yaml.ansible
+
+# Package information
+gitlab_edition: 'gitlab-ee'
+gitlab_version: ''
+gitlab_package_version_serparator: '-'
+gitlab_config_path: '/etc/gitlab/'
+
+# ee license
+gitlab_ee_license: 'changeme'
+
+# templates
+gitlab_config_template: 'gitlab.rb.j2'
+gitlab_secrets_template: 'gitlab-secrets.json.j2'
+gitlab_ee_license_template: 'Gitlab.gitlab-license.j2'
+
+# Paths and files
+gitlab_config_file: '/etc/gitlab/gitlab.rb'
+gitlab_secrets_file: '/etc/gitlab/gitlab-secrets.json'
+gitlab_ctl_binary: '/usr/bin/gitlab-ctl'
+gitlab_ee_license_file: '/etc/gitlab/Gitlab.gitlab-license'
+
+# install custom repository
+gitlab_install_custom_repo: false
+gitlab_custom_repo: 'gitlab.repo.j2'
+
+# ssh configuration
+gitlab_import_ssh_host_keys: false
+gitlab_ssh_host_keys:
+  /etc/ssh/ssh_host_rsa_key: 'changeme'
+  /etc/ssh/ssh_host_ecdsa_key: 'changeme'
+  /etc/ssh/ssh_host_ed25519_key: 'changeme'
+
+# gitlab.rb configs
+gitlab_conf_external_url: 'changeme'
+gitlab_conf_backup_path: 'changeme'
+gitlab_conf_ssl_cert_bundle: 'changeme'
+gitlab_conf_email_display_name: 'changeme'
+gitlab_conf_email_from: 'changeme'
+gitlab_conf_email_reply_to: 'changeme'
+gitlab_conf_initial_root_pw: 'changeme'
+gitlab_conf_initial_shared_runner_registration_token: 'changeme'
+gitlab_conf_ldap_enabled: true
+gitlab_conf_ldap_servers:
+  active_directory: true
+  admin_group: 'changeme'
+  allow_username_or_email_login: false
+  base: 'changeme'
+  bind_dn: 'changeme'
+  block_auto_created_users: 'changeme'
+  encryption: 'changeme'
+  group_base: 'changeme'
+  host: 'changeme'
+  label: 'changeme'
+  password: 'changeme'
+  port: 389
+  sync_ssh_keys: false
+  ca_file: 'changeme'
+  uid: 'changeme'
+  verify_certificates: true
+gitlab_conf_manage_backup_path: false
+gitlab_conf_omniauth_providers:
+  identifier: 'changeme'
+  redirect_uri: 'changeme'
+  secret: 'changeme'
+  discovery: true
+  issuer: 'changeme'
+  name: 'changeme'
+  label: 'changeme'
+gitlab_conf_nginx_enable: true
+gitlab_conf_nginx_redirect_https: true
+gitlab_conf_nginx_ssl_certificate: '/etc/gitlab/ssl/gitlab.crt'
+gitlab_conf_nginx_ssl_certificate_key: '/etc/gitlab/ssl/gitlab.key'
+gitlab_conf_letsencrypt_enable: false
+
+# gitlab-secrets.json configs
+gitlab_secrets_workhorse_token: 'changeme'
+gitlab_secrets_shell_token: 'changeme'
+gitlab_secrets_rails_key_base: 'changeme'
+gitlab_secrets_rails_db_key_base: 'changeme'
+gitlab_secrets_rails_otp_key_base: 'changeme'
+gitlab_secrets_rails_encrypted_settings_key_base: 'changeme'
+gitlab_secrets_rails_openid_connect_signing_key: 'changeme'
+gitlab_secrets_rails_ci_jwt_signing_key: 'changeme'
+gitlab_secrets_pages_secret: 'changeme'
+gitlab_secrets_pages_id: 'changeme'
+gitlab_secrets_pages_auth_secret: 'changeme'
+gitlab_secrets_pages_api_secret_key: 'changeme'
+gitlab_secrets_kas_api_key: 'changeme'
+gitlab_secrets_grafana_secret_key: 'changeme'
+gitlab_secrets_grafana_gitlab_secret: 'changeme'
+gitlab_secrets_grafana_gitlab_application_id: 'changeme'
+gitlab_secrets_grafana_admin_password: 'changeme'
+gitlab_secrets_grafana_metrics_basic_auth_password: 'changeme'
+gitlab_secrets_registry_http_secret: 'changeme'
+gitlab_secrets_registry_internal_certificate: 'changeme'
+gitlab_secrets_registry_internal_key: 'changeme'
+gitlab_secrets_letsencrypt_auto_enabled: 'changeme'
+gitlab_secrets_mattermost_invite_salt: 'changeme'
+gitlab_secrets_mattermost_file_public_link_salt: 'changeme'
+gitlab_secrets_mattermost_sql_at_rest_encrypt_key: 'changeme'
+gitlab_secrets_postgresql_internal_certificate: 'changeme'
+gitlab_secrets_postresql_internal_key: 'changeme'

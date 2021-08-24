@@ -1,0 +1,43 @@
+---
+# vim: ts=2 sw=2 et ft=yaml.ansible
+
+- name: copy gitlab configuration file
+  template:
+    src: '{{ gitlab_config_template }}'
+    dest: '{{ gitlab_config_file }}'
+    owner: root
+    group: root
+    mode: 0600
+  notify: reconfigure gitlab
+  no_log: true # do not expose potential secrets
+
+- name: copy gitlab secrets file
+  template:
+    src: gitlab-secrets.json.j2
+    dest: /etc/gitlab/gitlab-secrets.json
+    owner: root
+    group: root
+    mode: 0600
+  notify: reconfigure gitlab
+  no_log: true # do not expose potential secrets
+
+- name: copy license when installing gitlab-ee version
+  template:
+    src: '{{ gitlab_ee_license_template }}'
+    dest: '{{ gitlab_ee_license_file }}'
+    owner: root
+    group: root
+    mode: 0644
+  notify: reconfigure gitlab
+  no_log: true # do not expose potential secrets
+  when: gitlab_edition == 'gitlab-ee' and gitlab_ee_license | length > 0
+
+- name: copy ssh host keys when migrating
+  copy:
+    dest: '{{ item.key }}'
+    content: "{{ item.value }}\n"
+    owner: root
+    group: root
+    mode: 0400
+  loop: '{{ gitlab_ssh_host_keys | dict2items }}'
+  when: gitlab_import_ssh_host_keys

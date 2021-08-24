@@ -1,0 +1,75 @@
+# vim: ts=2 sw=2 et ft=ruby
+
+# general configs
+
+external_url '{{ gitlab_conf_external_url }}'
+
+# gitlab configs
+
+gitlab_rails['backup_path'] = "{{ gitlab_conf_backup_path }}"
+gitlab_rails['env'] = {"SSL_CERT_FILE"=>"{{ gitlab_conf_ssl_cert_bundle }}"}
+gitlab_rails['gitlab_email_display_name'] = "{{ gitlab_conf_email_display_name }}"
+gitlab_rails['gitlab_email_from'] = "{{ gitlab_conf_email_from }}"
+gitlab_rails['gitlab_email_reply_to'] = "{{ gitlab_conf_email_reply_to }}"
+gitlab_rails['initial_root_password'] = "{{ gitlab_conf_initial_root_pw }}"
+gitlab_rails['initial_shared_runners_registration_token'] = "{{ gitlab_conf_initial_shared_runner_registration_token }}"
+gitlab_rails['ldap_enabled'] = {{ gitlab_conf_ldap_enabled }}
+gitlab_rails['manage_backup_path'] = {{ gitlab_conf_manage_backup_path }}
+gitlab_rails['ldap_servers'] = { 
+  "main"=>{ 
+    "active_directory"=>{{ gitlab_conf_ldap_servers.active_directory }}, 
+    "admin_group"=>"{{ gitlab_conf_ldap_servers.admin_group }}", 
+    "allow_username_or_email_login"=>{{ gitlab_conf_ldap_servers.allow_username_or_email_login }},
+    "attributes"=>{
+      "email"=>["mail", "email", "userPrincipalName"], 
+      "first_name"=>"givenName", 
+      "last_name"=>"sn", 
+      "name"=>"nosuchattribute", 
+      "username"=>["uid", "userid", "sAMAccountName"]
+    }, 
+    "base"=>"{{ gitlab_conf_ldap_servers.base }}",
+    "bind_dn"=>"{{ gitlab_conf_ldap_servers.bind_dn }}",
+    "block_auto_created_users"=>{{ gitlab_conf_ldap_servers.block_auto_created_users }},
+    "encryption"=>"{{ gitlab_conf_ldap_servers.encryption }}",
+    "group_base"=>"{{ gitlab_conf_ldap_servers.group_base }}",
+    "host"=>"{{ gitlab_conf_ldap_servers.host }}",
+    "label"=>"{{ gitlab_conf_ldap_servers.label }}",
+    "password"=>"{{ gitlab_conf_ldap_servers.password }}",
+    "port"=>"{{ gitlab_conf_ldap_servers.port }}",
+    "sync_ssh_keys"=>{{ gitlab_conf_ldap_servers.sync_ssh_keys }},
+    "tls_options"=>{
+      "ca_file"=>"{{ gitlab_conf_ldap_servers.ca_file }}",
+    },
+    "uid"=>"{{ gitlab_conf_ldap_servers.uid }}",
+    "verify_certificates"=>{{ gitlab_conf_ldap_servers.verify_certificates }},
+  }
+}
+gitlab_rails['omniauth_providers'] = [{
+  "args"=>{
+    "client_options"=>{
+      "identifier"=>"{{ gitlab_conf_omniauth_providers.identifier }}",
+      "redirect_uri"=>"{{ gitlab_conf_omniauth_providers.redirect_uri }}",
+      "secret"=>"{{ gitlab_conf_omniauth_providers.secret }}",
+    },
+    "discovery"=>{{ gitlab_conf_omniauth_providers.discovery }},
+    "issuer"=>"{{ gitlab_conf_omniauth_providers.issuer }}",
+    "name"=>"{{ gitlab_conf_omniauth_providers.name }}",
+    "response_type"=>"code",
+    "scope"=>["openid", "profile"]
+  },
+  "label"=>"{{ gitlab_conf_omniauth_providers.label }}",
+  "name"=>"openid_connect"
+}]
+
+# nginx configs
+
+nginx['enable'] = {{ gitlab_conf_nginx_enable }}
+nginx['redirect_http_to_https'] = {{ gitlab_conf_nginx_redirect_https }}
+nginx['ssl_certificate'] = "{{ gitlab_conf_nginx_ssl_certificate }}"
+nginx['ssl_certificate_key'] = "{{ gitlab_conf_nginx_ssl_certificate_key }}"
+
+# letsencrypt configs
+
+letsencrypt['enable'] = {{ gitlab_conf_letsencrypt_enable }}
+
+

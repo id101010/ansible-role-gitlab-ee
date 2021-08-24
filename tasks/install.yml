@@ -1,0 +1,32 @@
+---
+# vim: ts=2 sw=2 et ft=yaml.ansible
+
+- name: check if gitlab is already installed
+  stat:
+    path: '{{ gitlab_ctl_binary }}'
+  register: gl_binary
+
+- name: install gitlab dependencies
+  package:
+    name: '{{ gitlab_pkg_dependencies }}'
+    state: present
+
+- name: add gitlab repository if necessary
+  template:
+    src: '{{ gitlab_install_custom_repo }}'
+    dest: '/etc/yum.repos.d/gitlab_{{ gitlab_edition }}.repo'
+    owner: root
+    group: root
+    mode: 0644
+  when: gitlab_install_custom_repo
+
+- name: assemble gitlab package name
+  set_fact:
+    gitlab_package: '{{ gitlab_edition }}{{ gitlab_package_version_separator }}{{ gitlab_version }}'
+  when: gitlab_version | length > 0
+
+- name: install gitlab
+  package:
+    name: '{{ gitlab_package | default(gitlab_edition) }}'
+    state: present
+  when: not gl_binary.stat.exists
